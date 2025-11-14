@@ -34,3 +34,22 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Deploy on Cloudflare Pages
+
+このプロジェクトはCloudflare Pagesにデプロイできます。
+
+### ビルド設定
+
+Cloudflare Pagesのダッシュボードで以下の設定を行ってください：
+
+- **Build command**: `npm run pages:build`
+- **Build output directory**: `.vercel/output/static`
+- **Root directory**: `/frontend` (プロジェクトのルートがリポジトリのルートの場合)
+
+または、自動検出を使用する場合は、ビルドコマンドを空にして、Cloudflare Pagesに自動検出させることができます。その場合、`package.json`に`@cloudflare/next-on-pages`と`vercel`が依存関係として追加されているため、自動的に正しいバージョンが使用されます。
+
+### 注意事項
+
+- `@cloudflare/next-on-pages@1.13.16`は非推奨です。将来的には[OpenNext adapter](https://opennext.js.org/cloudflare)への移行を検討してください。
+- 現在の設定では、`vercel@48.10.2`が明示的に追加されています。これにより、ビルド時の依存関係エラーを回避できます。
