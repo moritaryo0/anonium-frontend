@@ -1,0 +1,422 @@
+@import "tailwindcss";
+
+:root {
+  --background: #000000; /* darkest */
+  --foreground: #ededed;
+  --accent: #1f3b77; /* dark blue */
+  --surface-1: #0b0f14; /* slightly lighter than bg */
+  --surface-2: #12161c; /* a bit lighter for cards */
+  /* Voting colors (reversed: up=red, down=blue) */
+  --vote-blue: #3f7cf0; /* brighter blue */
+  --vote-up: #e15b64;
+  --vote-down: var(--vote-blue);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --font-sans: var(--font-roboto);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #000000;
+    --foreground: #ededed;
+    --accent: #1c2e57; /* darker blue for dark mode */
+    --surface-1: #0b0f14;
+    --surface-2: #12161c;
+    --vote-blue: #4a86ff; /* brighter in dark mode */
+    --vote-up: #e15b64;
+    --vote-down: var(--vote-blue);
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Slightly larger base font size */
+html {
+  font-size: 17px;
+}
+
+/* Subtle scrollbars (only for scrollable areas) */
+.overflow-auto {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: rgba(255,255,255,0.25) transparent; /* Firefox */
+}
+
+.overflow-auto::-webkit-scrollbar {
+  width: 4px; /* Chrome/Safari */
+  height: 4px;
+}
+
+.overflow-auto::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.overflow-auto::-webkit-scrollbar-thumb {
+  background-color: rgba(255,255,255,0.2);
+  border-radius: 6px;
+  border: 1px solid transparent; /* creates padding look */
+  background-clip: content-box;
+}
+
+.overflow-auto:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(255,255,255,0.28);
+}
+
+/* Surfaces */
+.surface-1 { background: var(--surface-1); }
+.surface-2 { background: var(--surface-2); }
+.border-subtle { border-color: rgba(255,255,255,0.12); }
+.text-subtle { color: rgba(255,255,255,0.7); }
+.icon-faint { color: rgba(255,255,255,0.45); }
+
+/* Vote colors */
+.active-up { color: var(--vote-up); }
+.active-down { color: var(--vote-down); }
+.hover-up:hover { color: var(--vote-up); }
+.hover-down:hover { color: var(--vote-down); }
+
+/* Simple micro animations */
+@keyframes pop {
+  0% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-1px) scale(1.15); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+.animate-pop { animation: pop 160ms ease-out; }
+
+/* Arrow bounce animations */
+@keyframes bounce-up {
+  0% { transform: translateY(0) scale(1); }
+  30% { transform: translateY(-4px) scale(1.1); }
+  60% { transform: translateY(-1px) scale(1.05); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+@keyframes bounce-down {
+  0% { transform: translateY(0) scale(1); }
+  30% { transform: translateY(4px) scale(1.1); }
+  60% { transform: translateY(1px) scale(1.05); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+.animate-bounce-up { animation: bounce-up 200ms ease-out; }
+.animate-bounce-down { animation: bounce-down 200ms ease-out; }
+
+@keyframes bump {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.18); }
+  100% { transform: scale(1); }
+}
+
+.animate-bump { animation: bump 180ms ease-out; }
+
+/* Fade in animation */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+/* Rotational count change (directional) */
+@keyframes count-up {
+  0% { transform: rotate(-0deg) scale(1); }
+  50% { transform: rotate(-180deg) scale(1.06); }
+  100% { transform: rotate(-360deg) scale(1); }
+}
+
+@keyframes count-down {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(0.96); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+.count-up { animation: count-up 280ms ease-out; }
+.count-down { animation: count-down 280ms ease-out; }
+
+/* Slide animations for comment expansion */
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+.animate-slide-down {
+  animation: slideDown 0.3s ease-in-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.3s ease-in-out;
+}
+
+/* Show scrollbars on hover only */
+.hover-scroll {
+  scrollbar-width: none; /* Firefox - hide */
+}
+.hover-scroll:hover {
+  scrollbar-width: thin; /* Firefox - show */
+}
+.hover-scroll::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+.hover-scroll:hover::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.hover-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.2);
+  border-radius: 9999px;
+}
+.hover-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ===== Page loader overlay ===== */
+.page-loader-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  background: var(--background);
+  transition: opacity 240ms ease;
+}
+
+.page-loader-overlay--fadeout {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ===== Fulfilling Bouncing Circle Spinner (CSS version) ===== */
+.fbc-spinner {
+  --fbc-size: 60px;
+  --fbc-duration: 4000ms;
+  --fbc-border: 3px;
+  --fbc-color: var(--foreground);
+  --fbc-accent: var(--accent);
+  position: relative;
+  width: var(--fbc-size);
+  height: var(--fbc-size);
+}
+
+.fbc-spinner__outer {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: var(--fbc-border) solid rgba(255,255,255,0.18);
+  border-top-color: var(--fbc-accent);
+  animation: fbc-rotate calc(var(--fbc-duration) * 0.9) linear infinite,
+             fbc-fill var(--fbc-duration) ease-in-out infinite;
+}
+
+.fbc-spinner__inner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: calc(var(--fbc-size) * 0.22);
+  height: calc(var(--fbc-size) * 0.22);
+  transform: translate(-50%, -50%);
+  background: var(--fbc-color);
+  border-radius: 9999px;
+  box-shadow: 0 0 0 calc(var(--fbc-border) * 1) rgba(255,255,255,0.08) inset;
+  animation: fbc-bounce calc(var(--fbc-duration) * 0.5) ease-in-out infinite;
+}
+
+@keyframes fbc-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes fbc-fill {
+  0% { border-top-color: var(--fbc-accent); border-right-color: rgba(255,255,255,0.18); }
+  25% { border-right-color: var(--fbc-accent); }
+  50% { border-bottom-color: var(--fbc-accent); }
+  75% { border-left-color: var(--fbc-accent); }
+  100% { border-top-color: var(--fbc-accent); border-right-color: rgba(255,255,255,0.18); }
+}
+
+@keyframes fbc-bounce {
+  0%, 100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.9; }
+  50% { transform: translate(-50%, calc(-50% - (var(--fbc-size) * 0.12))) scale(1); opacity: 1; }
+}
+
+/* ===== Atom Model Spinner (Si原子のボーアモデル) ===== */
+.atom-spinner {
+  --atom-size: 24px;
+  --atom-radius: 8.4px;
+  --atom-speed: 800ms;
+  --atom-nucleus-size: calc(var(--atom-size) * 0.2);
+  --atom-electron-size: calc(var(--atom-size) * 0.15);
+  position: relative;
+  width: var(--atom-size);
+  height: var(--atom-size);
+  display: inline-block;
+  transform-style: preserve-3d;
+  perspective: 100px;
+}
+
+.atom-spinner__nucleus {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--atom-nucleus-size);
+  height: var(--atom-nucleus-size);
+  transform: translate(-50%, -50%);
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 calc(var(--atom-nucleus-size) * 0.5) var(--accent);
+  z-index: 10;
+}
+
+.atom-spinner__orbit {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: calc(var(--atom-radius) * 2);
+  height: calc(var(--atom-radius) * 2);
+  margin-left: calc(var(--atom-radius) * -1);
+  margin-top: calc(var(--atom-radius) * -1);
+  transform-style: preserve-3d;
+  animation: atom-orbit var(--atom-speed) linear infinite;
+}
+
+.atom-spinner__electron {
+  position: absolute;
+  width: var(--atom-electron-size);
+  height: var(--atom-electron-size);
+  background: var(--accent);
+  border-radius: 50%;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 calc(var(--atom-electron-size) * 0.5) var(--accent);
+  animation: atom-electron-pulse calc(var(--atom-speed) / 2) ease-in-out infinite;
+}
+
+/* 3D軌道の回転アニメーション - 各電子が異なる角度で回転 */
+@keyframes atom-orbit {
+  0% {
+    transform: rotateZ(0deg) rotateY(0deg);
+  }
+  100% {
+    transform: rotateZ(360deg) rotateY(360deg);
+  }
+}
+
+/* 電子のパルスアニメーション */
+@keyframes atom-electron-pulse {
+  0%, 100% {
+    opacity: 0.7;
+    transform: translateX(-50%) scale(0.95);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1.05);
+  }
+}
+
+/* Si原子の四面体構造を模倣した4つの軌道配置 */
+.atom-spinner__orbit:nth-child(2) {
+  transform: rotateX(0deg) rotateY(0deg);
+  animation: atom-orbit-1 var(--atom-speed) linear infinite;
+}
+
+.atom-spinner__orbit:nth-child(3) {
+  transform: rotateX(109.47deg) rotateY(0deg); /* 四面体の角度 */
+  animation: atom-orbit-2 var(--atom-speed) linear infinite;
+}
+
+.atom-spinner__orbit:nth-child(4) {
+  transform: rotateX(109.47deg) rotateY(120deg); /* 四面体の角度 */
+  animation: atom-orbit-3 var(--atom-speed) linear infinite;
+}
+
+.atom-spinner__orbit:nth-child(5) {
+  transform: rotateX(109.47deg) rotateY(240deg); /* 四面体の角度 */
+  animation: atom-orbit-4 var(--atom-speed) linear infinite;
+}
+
+/* 各軌道の個別アニメーション（高速回転） */
+@keyframes atom-orbit-1 {
+  0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+  100% { transform: rotateX(0deg) rotateY(0deg) rotateZ(360deg); }
+}
+
+@keyframes atom-orbit-2 {
+  0% { transform: rotateX(109.47deg) rotateY(0deg) rotateZ(0deg); }
+  100% { transform: rotateX(109.47deg) rotateY(0deg) rotateZ(360deg); }
+}
+
+@keyframes atom-orbit-3 {
+  0% { transform: rotateX(109.47deg) rotateY(120deg) rotateZ(0deg); }
+  100% { transform: rotateX(109.47deg) rotateY(120deg) rotateZ(360deg); }
+}
+
+@keyframes atom-orbit-4 {
+  0% { transform: rotateX(109.47deg) rotateY(240deg) rotateZ(0deg); }
+  100% { transform: rotateX(109.47deg) rotateY(240deg) rotateZ(360deg); }
+}
+
+/* ===== Minimal code highlighting (no JS libs) ===== */
+.rt-code { color: var(--foreground); }
+.rt-code .tk-comment { color: #8b949e; font-style: italic; }
+.rt-code .tk-string { color: #a5d6ff; }
+.rt-code .tk-keyword { color: #ff7b72; }
+.rt-code .tk-number { color: #79c0ff; }
+
+/* ===== Chat scrollbar styling ===== */
+.chat-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+}
+
+.chat-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.chat-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chat-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.chat-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
