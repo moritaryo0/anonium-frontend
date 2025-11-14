@@ -83,6 +83,7 @@ type CommunityDetail = {
   membership_role?: string | null;
   is_admin?: boolean;
   is_blocked?: boolean;
+  is_favorite?: boolean;
   join_policy?: string;
   visibility?: string;
   karma?: number;
