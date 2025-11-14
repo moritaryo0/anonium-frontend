@@ -1,5 +1,7 @@
 "use client";
 
+export const runtime = 'edge';
+
 import { useEffect, useMemo, useRef, useState } from "react";
 import CropEditor from "@/app/components/CropEditor";
 import { useParams, useRouter } from "next/navigation";
