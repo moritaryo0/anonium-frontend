@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import Header from "../components/Header";
@@ -59,7 +59,7 @@ type TrendingPost = {
   trending_score?: number | null;
 };
 
-export default function SearchCommunitiesPage() {
+function SearchCommunitiesPageContent() {
   const pathname = usePathname();
   const [signedIn, setSignedIn] = useState<boolean>(false);
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
@@ -847,6 +847,18 @@ export default function SearchCommunitiesPage() {
 
       <MobileNav current={sidebarTab} onChange={(next) => setTab(next)} />
     </div>
+  );
+}
+
+export default function SearchCommunitiesPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-background text-foreground flex items-center justify-center">
+        <div className="text-subtle">読み込み中...</div>
+      </div>
+    }>
+      <SearchCommunitiesPageContent />
+    </Suspense>
   );
 }
 
