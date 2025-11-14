@@ -37,20 +37,36 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 ## Deploy on Cloudflare Pages
 
-このプロジェクトはCloudflare Pagesにデプロイできます。
+このプロジェクトはCloudflare Pagesに最適化されています。
 
-### ビルド設定
+### クイックスタート
 
-Cloudflare Pagesのダッシュボードで以下の設定を行ってください：
+1. **Cloudflare Pagesダッシュボードで設定**
+   - **Build command**: `npm run pages:build`
+   - **Build output directory**: `.vercel/output/static`
+   - **Root directory**: `/frontend` (リポジトリのルートがプロジェクトルートの場合)
 
-- **Build command**: `npm run pages:build`
-- **Build output directory**: `.vercel/output/static`
-- **Root directory**: `/frontend` (プロジェクトのルートがリポジトリのルートの場合)
+2. **環境変数を設定**
+   ```
+   NEXT_PUBLIC_API_BASE_URL=https://api.yourdomain.com
+   ALLOWED_ORIGINS=https://yourdomain.com
+   ```
 
-または、自動検出を使用する場合は、ビルドコマンドを空にして、Cloudflare Pagesに自動検出させることができます。その場合、`package.json`に`@cloudflare/next-on-pages`と`vercel`が依存関係として追加されているため、自動的に正しいバージョンが使用されます。
+3. **デプロイ**
+   - GitHubにプッシュすると自動デプロイされます
+
+詳細な設定方法は [`.cloudflare-pages.md`](./.cloudflare-pages.md) を参照してください。
+
+### 最適化済み機能
+
+✅ Edge Runtime対応（動的ルート）  
+✅ セキュリティヘッダー自動追加  
+✅ 画像最適化  
+✅ Gzip圧縮  
+✅ CORS設定  
+✅ 互換性フラグ設定済み  
 
 ### 注意事項
 
 - `@cloudflare/next-on-pages@1.13.16`は非推奨です。将来的には[OpenNext adapter](https://opennext.js.org/cloudflare)への移行を検討してください。
-- 現在の設定では、`vercel@48.10.2`が明示的に追加されています。これにより、ビルド時の依存関係エラーを回避できます。
-- `@cloudflare/next-on-pages@1.13.16`は`next@15.5.2`までしかサポートしていませんが、このプロジェクトは`next@15.5.4`を使用しています。`.npmrc`ファイルに`legacy-peer-deps=true`を設定することで、この互換性の問題を回避しています。
+- `.npmrc`に`legacy-peer-deps=true`を設定して依存関係の競合を回避しています。

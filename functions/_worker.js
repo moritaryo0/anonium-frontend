@@ -31,21 +31,23 @@ export default {
     // ----------- CORS 設定 -----------
     const origin = request.headers.get('Origin');
     
-    // 自分のフロントエンドだけ許可したいならここを固定する：
-    // const allowed = ["https://example.com"];
-    // if (allowed.includes(origin)) ...
-
-    if (origin) {
+    // 許可するオリジンを環境変数から取得（本番環境では制限推奨）
+    const allowedOrigins = env.ALLOWED_ORIGINS 
+      ? env.ALLOWED_ORIGINS.split(',')
+      : [origin].filter(Boolean);
+    
+    if (origin && allowedOrigins.includes(origin)) {
       newResponse.headers.set('Access-Control-Allow-Origin', origin);
       newResponse.headers.set('Access-Control-Allow-Credentials', 'true');
       newResponse.headers.set(
         'Access-Control-Allow-Methods',
-        'GET, POST, PUT, DELETE, OPTIONS'
+        'GET, POST, PUT, DELETE, OPTIONS, PATCH'
       );
       newResponse.headers.set(
         'Access-Control-Allow-Headers',
-        'Content-Type, Authorization'
+        'Content-Type, Authorization, X-Requested-With'
       );
+      newResponse.headers.set('Access-Control-Max-Age', '86400'); // 24時間
     }
 
     // Preflight
