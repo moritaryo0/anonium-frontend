@@ -350,7 +350,7 @@ export default function EditProfilePage() {
                       />
                       {displayNameError && <div className="mt-1 text-xs text-red-400">{displayNameError}</div>}
                       <p className="mt-1 text-xs text-subtle">表示名は投稿やコメントで表示される名前です。<br />
-                      このサービスでは他のSNSで利用している名前、アイコンは利用しないでください。</p>
+                      このサービスでは実名やペンネームも含む、他のSNSで利用している名前の使用は禁止です。</p>
                     </div>
 
                     {/* Icon upload - ログイン済みユーザーのみ */}

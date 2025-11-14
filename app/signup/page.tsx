@@ -537,7 +537,7 @@ export default function SignupPage() {
                 <h2 className="text-lg font-semibold mb-2">プロフィールを設定</h2>
                 <p className="text-sm text-subtle">
                   表示名とアイコンを設定してください。<br />
-                  このサービスでは他のSNSで利用している名前、アイコンは利用しないでください。
+                  このサービスでは実名やペンネームも含む、他のSNSで利用している名前の使用は禁止です。
                 </p>
               </div>
 

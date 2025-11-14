@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef, useCallback, Suspense } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Header from "./components/Header";
@@ -327,11 +327,13 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Header
-        signedIn={signedIn}
-        onLogin={login}
-        onLogout={logout}
-      />
+      <Suspense fallback={<div className="h-16 bg-black border-b border-subtle" />}>
+        <Header
+          signedIn={signedIn}
+          onLogin={login}
+          onLogout={logout}
+        />
+      </Suspense>
 
       <main className="max-w-none mx-auto px-2 sm:px-2 md:px-3 py-6">
         <div className="mx-auto" style={{ maxWidth: vw >= 1200 ? 1200 : '100%' }}>

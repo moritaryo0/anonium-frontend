@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useAuth } from "../utils/authContext";
@@ -27,6 +27,26 @@ type Notification = {
   is_read: boolean;
   created_at: string;
 };
+
+// SearchParamsを同期するコンポーネント（Suspenseでラップする必要がある）
+function SearchParamsSync({ 
+  onSearchParamsChange 
+}: { 
+  onSearchParamsChange: (searchTerm: string) => void 
+}) {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (!searchParams) return;
+    const q = searchParams.get("q") || "";
+    if (pathname === "/search") {
+      onSearchParamsChange(q);
+    }
+  }, [pathname, searchParams, onSearchParamsChange]);
+
+  return null;
+}
 
 // Createボタンコンポーネント（デスクトップ版）
 function CreateButton() {
@@ -230,7 +250,6 @@ export default function Header({ signedIn: propSignedIn, onLogin: propOnLogin, o
   const API = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000";
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   // ログアウト処理（認証コンテキストを更新）
@@ -336,14 +355,6 @@ export default function Header({ signedIn: propSignedIn, onLogin: propOnLogin, o
       window.removeEventListener('storage', handleStorageChange);
     };
   }, [fetchMe, signedIn]);
-
-  useEffect(() => {
-    if (!searchParams) return;
-    const q = searchParams.get("q") || "";
-    if (pathname === "/search") {
-      setSearchTerm((prev) => (prev === q ? prev : q));
-    }
-  }, [pathname, searchParams]);
 
   // 未読通知数を取得
   const fetchUnreadCount = useCallback(async () => {
@@ -511,13 +522,20 @@ export default function Header({ signedIn: propSignedIn, onLogin: propOnLogin, o
     router.push(`/search${query}`);
   }
 
+  const handleSearchParamsChange = useCallback((q: string) => {
+    setSearchTerm((prev) => (prev === q ? prev : q));
+  }, []);
+
   return (
     <header className="bg-black text-white border-b border-subtle sticky top-0 z-50">
+      <Suspense fallback={null}>
+        <SearchParamsSync onSearchParamsChange={handleSearchParamsChange} />
+      </Suspense>
       <div className="max-w-7xl mx-auto px-4 h-16 flex items-center gap-3">
         <div className="flex items-center gap-3 flex-shrink-0">
           <Link href="/" className="flex flex-col items-center leading-tight">
             <span className="font-semibold tracking-wide whitespace-nowrap text-center">
-              Anonium
+              Anonium[<span className="text-red-500">β版</span>]
             </span>
             <span className="text-xs text-subtle whitespace-nowrap text-center">
               インターネットの匿名元素

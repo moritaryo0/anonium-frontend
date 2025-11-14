@@ -181,16 +181,16 @@ export default function CreateFab({ hideCreatePost = false }: CreateFabProps) {
                   Anonium(アノニウム)はインターネットの匿名性を構成する元素という意味で、アノニマス(anonymous : 匿名)と元素(~ium)から取った言葉です。
                 </p>
                 <p className="text-subtle">
-                  このサービスは基本的に原則匿名であり、我々はインターネットを構成する匿名性の元素の集合体なのです。
+                  このサービスは基本的に原則匿名であり、実名の使用は禁止です。我々はインターネットを構成する匿名性の元素の集合体なのです。
                 </p>
                 <div className="pt-2 border-t border-subtle">
                   <Link
-                    href="/about"
+                    href="/about/qa"
                     onClick={() => setIsModalOpen(false)}
-                    className="inline-flex items-center gap-2 text-accent hover:text-accent/80 transition-colors"
+                    className="inline-flex items-center gap-2 text-white hover:text-white/80 transition-colors"
                   >
                     <span className="material-symbols-rounded text-base" style={{ fontSize: 16 }}>help_outline</span>
-                    <span>アノニウムの使い方を見る</span>
+                    <span>よくある質問（Q&A）を見る</span>
                   </Link>
                 </div>
               </div>
