@@ -53,3 +53,4 @@ Cloudflare Pagesのダッシュボードで以下の設定を行ってくださ�
 
 - `@cloudflare/next-on-pages@1.13.16`は非推奨です。将来的には[OpenNext adapter](https://opennext.js.org/cloudflare)への移行を検討してください。
 - 現在の設定では、`vercel@48.10.2`が明示的に追加されています。これにより、ビルド時の依存関係エラーを回避できます。
+- `@cloudflare/next-on-pages@1.13.16`は`next@15.5.2`までしかサポートしていませんが、このプロジェクトは`next@15.5.4`を使用しています。`.npmrc`ファイルに`legacy-peer-deps=true`を設定することで、この互換性の問題を回避しています。
