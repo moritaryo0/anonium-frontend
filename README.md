@@ -45,6 +45,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
    - **Build command**: `npm run pages:build`
    - **Build output directory**: `.vercel/output/static`
    - **Root directory**: `/frontend` (リポジトリのルートがプロジェクトルートの場合)
+   - **Deploy command**: （**削除してください** - 自動デプロイでは不要です）
 
 2. **環境変数を設定**
    ```
