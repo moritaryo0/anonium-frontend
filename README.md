@@ -42,10 +42,13 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 ### クイックスタート
 
 1. **Cloudflare Pagesダッシュボードで設定**
+   - **Framework preset**: `Next.js (Static HTML Export)` または `None`
    - **Build command**: `npm run pages:build`
    - **Build output directory**: `.vercel/output/static`
    - **Root directory**: `/frontend` (リポジトリのルートがプロジェクトルートの場合)
-   - **Deploy command**: （**削除してください** - 自動デプロイでは不要です）
+   - **Deploy command**: `npx wrangler pages deploy .vercel/output/static --project-name=anonium-frontend`
+   
+   **注意**: デプロイコマンドが必須の場合、上記のコマンドを使用してください。`wrangler`は`devDependencies`に含まれています。
 
 2. **環境変数を設定**
    ```
